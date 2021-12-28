@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import TrezorConnect from "trezor-connect";
+import {useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const defaultStellarPath = "m/44'/148'/0'";
+
+const App = () => {
+    const [address, setAddress] = useState('');
+
+    const connect = async (path) => {
+        // old config, can set any value to email and appUrl
+        TrezorConnect.manifest({
+            email: 'my_email@example.com',
+            appUrl: 'http://localhost:3000',
+        });
+        try {
+            const response = await TrezorConnect.stellarGetAddress({
+                path: path || defaultStellarPath,
+            });
+            if ('address' in response.payload) {
+                setAddress(response.payload.address);
+            }
+        } catch (e) {
+            setAddress('');
+            return JSON.stringify(e);
+        }
+    }
+
+    return (
+        <>
+            <div>Current wallet: {address ? '-' : address}</div>
+            <button onClick={connect}>
+                Connect Trezor
+            </button>
+        </>
+    )
+};
 
 export default App;
