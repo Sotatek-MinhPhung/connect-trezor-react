@@ -21,8 +21,11 @@ const App = () => {
             const response = await TrezorConnect.stellarGetAddress({
                 path: path || defaultStellarPath,
             });
+            // console.log(response.payload);
             if ('address' in response.payload) {
                 setAddress(response.payload.address);
+            } else {
+                setAddress('');
             }
         } catch (e) {
             setAddress('');
