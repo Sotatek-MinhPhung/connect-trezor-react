@@ -8,9 +8,9 @@ const App = () => {
     const [path, setPath] = useState(defaultStellarPath);
 
     const connect = async () => {
-        // old config, can set any value to email and appUrl
-        // maybe, there's no need these config in new version of package
-        // if it's not working, try to remove the config below or use old version "trezor-connect": "8.1.27",
+        // config
+        // read more in here https://github.com/trezor/connect/blob/develop/docs/index.md
+        // if it's not working, try to use old version "trezor-connect": "8.1.27",
         TrezorConnect.manifest({
             email: 'my_email@example.com',
             appUrl: 'http://localhost:3000',
@@ -43,7 +43,7 @@ const App = () => {
             <div>Current wallet: {address ? '-' : address}</div>
             <button onClick={connect}>
                 Connect Trezor
-            </button>
+            </button><br/>
             path: <input type="text" value={path} onChange={handlePathOnChange}/>
         </>
     )
