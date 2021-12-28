@@ -13,6 +13,7 @@ const App = () => {
             appUrl: 'http://localhost:3000',
         });
         try {
+            // find function in: https://github.com/trezor/connect/blob/develop/docs/methods.md
             const response = await TrezorConnect.stellarGetAddress({
                 path: path || defaultStellarPath,
             });
